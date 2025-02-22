@@ -1,6 +1,6 @@
 {
     "name": "react-native-lq-toast",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A customizable toast component for React Native.",
     "repository": {
         "type": "git",
