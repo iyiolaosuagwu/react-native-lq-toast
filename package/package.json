@@ -1,0 +1,39 @@
+{
+    "name": "react-native-lq-toast",
+    "version": "1.0.0",
+    "description": "A customizable toast component for React Native.",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc"
+    },
+    "keywords": [
+        "react-native",
+        "toast",
+        "notification",
+        "UI"
+    ],
+    "author": "Iyiola Osuagwu",
+    "license": "MIT",
+    "type": "module",
+    "dependencies": {
+        "react": ">=16.8.0",
+        "react-native": ">=0.60.0"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.26.9",
+        "@babel/preset-react": "^7.26.3",
+        "@babel/preset-typescript": "^7.26.0",
+        "@types/react": "^19.0.10",
+        "typescript": "^5.7.3"
+    },
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-native": ">=0.60.0"
+    }
+}

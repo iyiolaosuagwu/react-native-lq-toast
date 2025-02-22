@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "lib",
+        "rootDir": "src",
+        "declaration": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "target": "ES6",
+        "jsx": "react-native",
+        "strict": true,
+        "skipLibCheck": true,
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["src"]
+}
