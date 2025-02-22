@@ -2,6 +2,14 @@
     "name": "react-native-lq-toast",
     "version": "1.0.7",
     "description": "A customizable toast component for React Native.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/iyiolaosuagwu/react-native-lq-toast.git"
+    },
+    "bugs": {
+        "url": "https://github.com/iyiolaosuagwu/react-native-lq-toast/issues"
+    },
+    "homepage": "https://github.com/iyiolaosuagwu/react-native-lq-toast#readme",
     "main": "lib/index.js",
     "module": "lib/index.js",
     "types": "lib/index.d.ts",
