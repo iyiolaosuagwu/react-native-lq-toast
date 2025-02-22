@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 interface ShowToastOptions {
     title: string;
     description: string;
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "default";
 }
 interface ToastContextType {
     showToast: (options: ShowToastOptions) => void;

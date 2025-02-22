@@ -4,14 +4,14 @@ import LQToast from "./LQToast";
 interface ToastState {
     title: string;
     description: string;
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "default";
     isVisible: boolean;
 }
 
 interface ShowToastOptions {
     title: string;
     description: string;
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "default";
 }
 
 interface ToastContextType {
@@ -43,7 +43,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     const showToast = ({
         title,
         description,
-        variant = "success",
+        variant = "default",
     }: ShowToastOptions) => {
         setToast({ title, description, variant, isVisible: true });
 

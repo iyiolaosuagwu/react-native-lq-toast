@@ -2,7 +2,7 @@ import React from "react";
 interface LQToastProps {
     title: string;
     description: string;
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "default";
     isVisible: boolean;
     duration?: number;
     direction?: "top" | "bottom";

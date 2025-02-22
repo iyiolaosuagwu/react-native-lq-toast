@@ -10,24 +10,25 @@ import {
 interface LQToastProps {
     title: string;
     description: string;
-    variant?: "success" | "error" | "warning";
+    variant?: "success" | "error" | "warning" | "default";
     isVisible: boolean;
     duration?: number;
     direction?: "top" | "bottom";
     onDismiss: () => void;
-    customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>; // Allow custom component
+    customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>;
 }
 
 const iconsMap = {
     success: <Text>✅</Text>,
     error: <Text>❌</Text>,
     warning: <Text>⚠️</Text>,
+    default: <Text></Text>,
 };
 
 const LQToast: React.FC<LQToastProps> = ({
     title,
     description,
-    variant = "success",
+    variant = "default",
     isVisible,
     direction = "top",
     duration = 300,
@@ -96,11 +97,11 @@ const styles = StyleSheet.create({
         zIndex: 9999,
         flexDirection: "row",
         gap: 10,
-        backgroundColor: "#EFFAF6",
     },
     success: { backgroundColor: "#EFFAF6" },
     error: { backgroundColor: "#FDEDF0" },
     warning: { backgroundColor: "#FFF3CD" },
+    default: { backgroundColor: "#fff" },
     title: { fontSize: 15, fontWeight: "700", color: "#0A0D14" },
     description: { color: "#64748B", fontSize: 15, fontWeight: "500" },
 });
