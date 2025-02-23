@@ -13,6 +13,8 @@ interface LQToastProps {
     variant?: "success" | "error" | "warning" | "default";
     isVisible: boolean;
     duration?: number;
+    offsetTop?: number;
+    offsetBottom?: number;
     direction?: "top" | "bottom";
     onDismiss: () => void;
     customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>;
@@ -32,22 +34,22 @@ const LQToast: React.FC<LQToastProps> = ({
     isVisible,
     direction = "top",
     duration = 300,
+    offsetTop = 60,
+    offsetBottom = 100,
     onDismiss,
     customComponent: CustomComponent,
 }) => {
     const slideAnim = useRef(
-        new Animated.Value(direction === "top" ? -100 : 100)
+        new Animated.Value(direction === "top" ? -offsetTop : offsetBottom)
     ).current;
 
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: isVisible
-                ? direction === "top"
-                    ? 60
-                    : -60
+                ? 0
                 : direction === "top"
-                ? -100
-                : 100,
+                ? -offsetTop
+                : offsetBottom,
             duration,
             useNativeDriver: true,
         }).start();

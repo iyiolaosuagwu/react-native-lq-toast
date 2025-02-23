@@ -25,6 +25,8 @@ interface ToastProviderProps {
     children: ReactNode;
     duration?: number;
     direction?: "top" | "bottom";
+    offsetTop?: number;
+    offsetBottom?: number;
     customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>;
 }
 
@@ -33,6 +35,8 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     direction = "top",
     customComponent,
     duration = 300,
+    offsetTop = 60,
+    offsetBottom = 100,
 }) => {
     const [toast, setToast] = useState<ToastState>({
         title: "",
@@ -65,6 +69,8 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
                 direction={direction}
                 customComponent={customComponent}
                 duration={duration}
+                offsetTop={offsetTop}
+                offsetBottom={offsetBottom}
             />
         </ToastContext.Provider>
     );
