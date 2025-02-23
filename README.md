@@ -2,6 +2,12 @@
 
 A **lightweight and customizable toast notification library** for React Native. It supports animations, different toast variants, and allows users to pass a custom component for the toast design.
 
+## 🎥 Demo
+
+Here’s how the toast appears from the **top** and **bottom**:
+
+![Top Toast](https://res.cloudinary.com/iyiola/image/upload/v1740296844/Screen_Recording_2025-02-23_at_08.26.08_rurhdu.gif)
+
 ## 📦 Installation
 
 ```sh
@@ -128,13 +134,6 @@ showToast({
     duration: 5000,
 });
 ```
-
-## 🎥 Demo
-
-Here’s how the toast appears from the **top** and **bottom**:
-
--   **Top Toast Animation:** ![Top Toast](https://res.cloudinary.com/iyiola/image/upload/v1740258308/top_q4hy60.gif)
--   **Bottom Toast Animation:** ![Bottom Toast](https://res.cloudinary.com/iyiola/image/upload/v1740258327/bottom_zx73l0.gif)
 
 ## 🎨 Toast Variants
 
