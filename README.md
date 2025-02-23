@@ -143,6 +143,14 @@ showToast({
 });
 ```
 
+## What’s Improved?
+
+```
+✅ Toast moves above the keyboard when direction="bottom"
+✅ Uses Keyboard.addListener() to track the keyboard height dynamically
+✅ Keeps original offsetTop and offsetBottom behavior intact
+```
+
 ## 🎨 Toast Variants
 
 | Variant | Icon | Default Background |
@@ -170,6 +178,8 @@ showToast({
 | `showToast` | `{ title: string, description?: string, variant?: 'success' \| 'error' \| 'warning', duration?: number, offsetTop?: number, offsetBottom?: number }` | Displays a toast.        |
 | `hideToast` | `()`                                                                                                                                                 | Hides the current toast. |
 
+This makes sure the toast never overlaps the keyboard when appearing at the bottom! 🚀
+
 ## 📝 License
 
 This project is licensed under the **MIT License**.
@@ -177,3 +187,10 @@ This project is licensed under the **MIT License**.
 ---
 
 Now you're all set to use **react-native-lq-toast** in your project! 🚀🔥
+
+````
+
+```
+
+```
+````

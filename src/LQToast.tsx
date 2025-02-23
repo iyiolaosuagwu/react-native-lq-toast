@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Animated,
     StyleSheet,
     View,
     TouchableOpacity,
     Text,
+    Keyboard,
 } from "react-native";
 
 interface LQToastProps {
@@ -42,6 +43,26 @@ const LQToast: React.FC<LQToastProps> = ({
     const slideAnim = useRef(
         new Animated.Value(direction === "top" ? -offsetTop : offsetBottom)
     ).current;
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+    useEffect(() => {
+        if (direction === "bottom") {
+            const keyboardDidShowListener = Keyboard.addListener(
+                "keyboardDidShow",
+                (event) => setKeyboardHeight(event.endCoordinates.height)
+            );
+
+            const keyboardDidHideListener = Keyboard.addListener(
+                "keyboardDidHide",
+                () => setKeyboardHeight(0)
+            );
+
+            return () => {
+                keyboardDidShowListener.remove();
+                keyboardDidHideListener.remove();
+            };
+        }
+    }, [direction]);
 
     useEffect(() => {
         Animated.timing(slideAnim, {
@@ -69,7 +90,15 @@ const LQToast: React.FC<LQToastProps> = ({
             style={[
                 styles.toastContainer,
                 styles[variant],
-                { transform: [{ translateY: slideAnim }], [direction]: 10 },
+                {
+                    transform: [{ translateY: slideAnim }],
+                    [direction]:
+                        direction === "bottom"
+                            ? keyboardHeight > 0
+                                ? keyboardHeight + offsetBottom
+                                : offsetBottom
+                            : offsetTop,
+                },
             ]}
         >
             {iconsMap[variant]}
