@@ -194,3 +194,5 @@ Now you're all set to use **react-native-lq-toast** in your project! 🚀🔥
 
 ```
 ````
+
+---
