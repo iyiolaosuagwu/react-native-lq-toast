@@ -197,11 +197,4 @@ This project is licensed under the **MIT License**.
 
 Now you're all set to use **react-native-lq-toast** in your project! 🚀🔥
 
-````
-
-```
-
-```
-````
-
 ---

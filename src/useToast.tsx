@@ -51,7 +51,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         variant = "default",
         duration: customDuration,
     }: ShowToastOptions) => {
-        const toastDuration = customDuration ?? duration; // Use dynamic duration or default
+        const toastDuration = customDuration ?? duration;
 
         setToast({ title, description, variant, isVisible: true });
 
