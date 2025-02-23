@@ -6,7 +6,7 @@ A **lightweight and customizable toast notification library** for React Native. 
 
 Here’s how the toast appears from the **top** and **bottom**:
 
-![Top Toast](https://res.cloudinary.com/iyiola/image/upload/v1740296844/Screen_Recording_2025-02-23_at_08.26.08_rurhdu.gif)
+![Top Toast, 'Bottom Toast', 'Keyboard Avoid Toast'](https://res.cloudinary.com/iyiola/image/upload/v1740320032/Screen_Recording_2025-02-23_at_15.05.15_u7bj1n.gif)
 
 ## 📦 Installation
 

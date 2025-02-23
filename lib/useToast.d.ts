@@ -15,7 +15,6 @@ interface ToastProviderProps {
     direction?: "top" | "bottom";
     offsetTop?: number;
     offsetBottom?: number;
-    keyboardOffset?: number;
     customComponent?: React.FC<{
         animationStyle?: any;
         onDismiss: () => void;

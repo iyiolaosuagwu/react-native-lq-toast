@@ -7,7 +7,6 @@ interface LQToastProps {
     duration?: number;
     offsetTop?: number;
     offsetBottom?: number;
-    keyboardOffset?: number;
     direction?: "top" | "bottom";
     onDismiss: () => void;
     customComponent?: React.FC<{
