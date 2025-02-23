@@ -5,6 +5,8 @@ interface LQToastProps {
     variant?: "success" | "error" | "warning" | "default";
     isVisible: boolean;
     duration?: number;
+    offsetTop?: number;
+    offsetBottom?: number;
     direction?: "top" | "bottom";
     onDismiss: () => void;
     customComponent?: React.FC<{

@@ -12,6 +12,8 @@ interface ToastProviderProps {
     children: ReactNode;
     duration?: number;
     direction?: "top" | "bottom";
+    offsetTop?: number;
+    offsetBottom?: number;
     customComponent?: React.FC<{
         animationStyle: any;
         onDismiss: () => void;

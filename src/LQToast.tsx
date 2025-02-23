@@ -41,7 +41,7 @@ const LQToast: React.FC<LQToastProps> = ({
     customComponent: CustomComponent,
 }) => {
     const slideAnim = useRef(
-        new Animated.Value(direction === "top" ? -offsetTop : offsetBottom)
+        new Animated.Value(direction === "top" ? -100 : 100)
     ).current;
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -67,10 +67,12 @@ const LQToast: React.FC<LQToastProps> = ({
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: isVisible
-                ? 0
+                ? direction === "top"
+                    ? 60
+                    : -60
                 : direction === "top"
-                ? -offsetTop
-                : offsetBottom,
+                ? -100
+                : 100,
             duration,
             useNativeDriver: true,
         }).start();
@@ -90,15 +92,7 @@ const LQToast: React.FC<LQToastProps> = ({
             style={[
                 styles.toastContainer,
                 styles[variant],
-                {
-                    transform: [{ translateY: slideAnim }],
-                    [direction]:
-                        direction === "bottom"
-                            ? keyboardHeight > 0
-                                ? keyboardHeight + offsetBottom
-                                : offsetBottom
-                            : offsetTop,
-                },
+                { transform: [{ translateY: slideAnim }], [direction]: 10 },
             ]}
         >
             {iconsMap[variant]}
