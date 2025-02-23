@@ -10,7 +10,7 @@ interface LQToastProps {
     direction?: "top" | "bottom";
     onDismiss: () => void;
     customComponent?: React.FC<{
-        animationStyle: any;
+        animationStyle?: any;
         onDismiss: () => void;
     }>;
 }

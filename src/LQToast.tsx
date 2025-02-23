@@ -18,7 +18,7 @@ interface LQToastProps {
     offsetBottom?: number;
     direction?: "top" | "bottom";
     onDismiss: () => void;
-    customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>;
+    customComponent?: React.FC<{ animationStyle?: any; onDismiss: () => void }>;
 }
 
 const iconsMap = {
@@ -34,14 +34,16 @@ const LQToast: React.FC<LQToastProps> = ({
     variant = "default",
     isVisible,
     direction = "top",
-    duration = 300,
+    duration,
     offsetTop = 60,
     offsetBottom = 100,
     onDismiss,
     customComponent: CustomComponent,
 }) => {
     const slideAnim = useRef(
-        new Animated.Value(direction === "top" ? -100 : 100)
+        new Animated.Value(
+            direction === "top" ? -offsetTop - 100 : offsetBottom + 100
+        )
     ).current;
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -68,22 +70,34 @@ const LQToast: React.FC<LQToastProps> = ({
         Animated.timing(slideAnim, {
             toValue: isVisible
                 ? direction === "top"
-                    ? 60
-                    : -60
+                    ? offsetTop
+                    : -offsetBottom
                 : direction === "top"
-                ? -100
-                : 100,
+                ? -offsetTop - 100
+                : offsetBottom + 100,
             duration,
             useNativeDriver: true,
         }).start();
-    }, [isVisible, direction]);
+    }, [isVisible, direction, offsetTop, offsetBottom]);
 
     if (CustomComponent) {
         return (
-            <CustomComponent
-                animationStyle={{ transform: [{ translateY: slideAnim }] }}
-                onDismiss={onDismiss}
-            />
+            <Animated.View
+                style={[
+                    styles.toastContainer,
+                    {
+                        transform: [{ translateY: slideAnim }],
+                        [direction]:
+                            direction === "bottom"
+                                ? keyboardHeight > 0
+                                    ? keyboardHeight + offsetBottom
+                                    : offsetBottom
+                                : offsetTop,
+                    },
+                ]}
+            >
+                <CustomComponent onDismiss={onDismiss} />
+            </Animated.View>
         );
     }
 
@@ -92,7 +106,15 @@ const LQToast: React.FC<LQToastProps> = ({
             style={[
                 styles.toastContainer,
                 styles[variant],
-                { transform: [{ translateY: slideAnim }], [direction]: 10 },
+                {
+                    transform: [{ translateY: slideAnim }],
+                    [direction]:
+                        direction === "bottom"
+                            ? keyboardHeight > 0
+                                ? keyboardHeight + offsetBottom
+                                : offsetBottom
+                            : offsetTop,
+                },
             ]}
         >
             {iconsMap[variant]}

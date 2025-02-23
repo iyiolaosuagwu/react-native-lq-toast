@@ -111,7 +111,16 @@ const CustomToast = ({ title, description, onDismiss }) => {
     );
 };
 
-<ToastProvider direction="top" customToast={CustomToast}>
+<ToastProvider
+    direction="top"
+    customComponent={() => (
+        <CustomToast
+            title="edfvgf"
+            description="rjfhbveun"
+            onDismiss={() => console.log("closed")}
+        />
+    )}
+>
     <HomeScreen />
 </ToastProvider>;
 ```
@@ -124,7 +133,7 @@ Additionally, you can adjust the toast's position using `offsetTop` and `offsetB
 ```tsx
 <ToastProvider
     direction="top"
-    duration={5000}
+    duration={4000}
     offsetTop={60}
     offsetBottom={100}
 >
@@ -137,7 +146,7 @@ showToast({
     title: "Info",
     description: "This message will disappear in 5 seconds.",
     variant: "warning",
-    duration: 5000,
+    duration: 4000,
     offsetTop: 60,
     offsetBottom: 100,
 });
@@ -163,13 +172,13 @@ showToast({
 
 ### **`ToastProvider` Props**
 
-| Prop           | Type                | Default | Description                                        |
-| -------------- | ------------------- | ------- | -------------------------------------------------- |
-| `direction`    | `'top' \| 'bottom'` | `'top'` | Position of the toast.                             |
-| `customToast`  | `ReactNode`         | `null`  | Custom toast component.                            |
-| `duration`     | `number`            | `300`   | Duration before toast disappears (ms).             |
-| `offsetTop`    | `number`            | `60`    | Offset from the top when direction is "top".       |
-| `offsetBottom` | `number`            | `100`   | Offset from the bottom when direction is "bottom". |
+| Prop           | Type                | Default  | Description                                        |
+| -------------- | ------------------- | -------- | -------------------------------------------------- |
+| `direction`    | `'top' \| 'bottom'` | `'top'`  | Position of the toast.                             |
+| `customToast`  | `ReactNode`         | `null`   | Custom toast component.                            |
+| `duration`     | `number`            | `4000ms` | Duration before toast disappears (ms).             |
+| `offsetTop`    | `number`            | `60`     | Offset from the top when direction is "top".       |
+| `offsetBottom` | `number`            | `100`    | Offset from the bottom when direction is "bottom". |
 
 ### **`useToast()` Methods**
 

@@ -3,6 +3,7 @@ interface ShowToastOptions {
     title: string;
     description: string;
     variant?: "success" | "error" | "warning" | "default";
+    duration?: number;
 }
 interface ToastContextType {
     showToast: (options: ShowToastOptions) => void;
@@ -15,7 +16,7 @@ interface ToastProviderProps {
     offsetTop?: number;
     offsetBottom?: number;
     customComponent?: React.FC<{
-        animationStyle: any;
+        animationStyle?: any;
         onDismiss: () => void;
     }>;
 }

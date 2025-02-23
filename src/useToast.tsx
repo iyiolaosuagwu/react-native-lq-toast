@@ -12,6 +12,7 @@ interface ShowToastOptions {
     title: string;
     description: string;
     variant?: "success" | "error" | "warning" | "default";
+    duration?: number;
 }
 
 interface ToastContextType {
@@ -27,16 +28,16 @@ interface ToastProviderProps {
     direction?: "top" | "bottom";
     offsetTop?: number;
     offsetBottom?: number;
-    customComponent?: React.FC<{ animationStyle: any; onDismiss: () => void }>;
+    customComponent?: React.FC<{ animationStyle?: any; onDismiss: () => void }>; // ✅ Ensuring correct type
 }
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
     children,
     direction = "top",
     customComponent,
-    duration = 300,
-    offsetTop = 60,
-    offsetBottom = 100,
+    duration = 4000,
+    offsetTop = 30,
+    offsetBottom = 30,
 }) => {
     const [toast, setToast] = useState<ToastState>({
         title: "",
@@ -48,12 +49,17 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         title,
         description,
         variant = "default",
+        duration: customDuration,
     }: ShowToastOptions) => {
+        const toastDuration = customDuration ?? duration; // Use dynamic duration or default
+
         setToast({ title, description, variant, isVisible: true });
 
-        setTimeout(() => {
-            setToast((prev) => ({ ...prev, isVisible: false }));
-        }, 4000);
+        if (toastDuration > 0) {
+            setTimeout(() => {
+                setToast((prev) => ({ ...prev, isVisible: false }));
+            }, toastDuration);
+        }
     };
 
     const hideToast = () => {
@@ -68,7 +74,6 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
                 onDismiss={hideToast}
                 direction={direction}
                 customComponent={customComponent}
-                duration={duration}
                 offsetTop={offsetTop}
                 offsetBottom={offsetBottom}
             />
