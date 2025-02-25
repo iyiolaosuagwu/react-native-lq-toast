@@ -7,9 +7,10 @@ interface LQToastProps {
     duration?: number;
     offsetTop?: number;
     offsetBottom?: number;
-    direction?: "top" | "bottom";
+    position?: "top" | "bottom" | "center";
+    animationType?: "slide" | "fade";
     onDismiss: () => void;
-    customComponent?: React.FC<{
+    customToastComponent?: React.FC<{
         animationStyle?: any;
         onDismiss: () => void;
     }>;

@@ -22,7 +22,7 @@ yarn add react-native-lq-toast
 
 ## 🚀 Usage
 
-### **1️⃣ Wrap Your App with `ToastProvider`**
+### **1⃣ Wrap Your App with `ToastProvider`**
 
 To use the toast system, wrap your app with the `ToastProvider`.
 
@@ -33,7 +33,7 @@ import HomeScreen from "./HomeScreen";
 
 const App = () => {
     return (
-        <ToastProvider direction="top">
+        <ToastProvider position="top" animationType="slide">
             <HomeScreen />
         </ToastProvider>
     );
@@ -42,7 +42,7 @@ const App = () => {
 export default App;
 ```
 
-### **2️⃣ Use `useToast()` Hook to Show Toasts**
+### **2⃣ Use `useToast()` Hook to Show Toasts**
 
 Inside any component, you can use the `useToast` hook to show or hide toasts.
 
@@ -84,17 +84,17 @@ const HomeScreen = () => {
 export default HomeScreen;
 ```
 
-### **3️⃣ Customize Toast Direction**
+### **3⃣ Customize Toast Position and Animation**
 
-By default, the toast appears at the **top** of the screen, but you can change it to appear at the bottom:
+By default, the toast appears at the **top** of the screen with a **slide** animation, but you can customize both:
 
 ```tsx
-<ToastProvider direction="bottom">
+<ToastProvider position="bottom" animationType="fade">
     <HomeScreen />
 </ToastProvider>
 ```
 
-### **4️⃣ Passing a Custom Toast Component**
+### **4⃣ Passing a Custom Toast Component**
 
 You can pass a **custom component** for the toast UI while still using the built-in animation:
 
@@ -112,11 +112,12 @@ const CustomToast = ({ title, description, onDismiss }) => {
 };
 
 <ToastProvider
-    direction="top"
+    position="top"
+    animationType="slide"
     customComponent={() => (
         <CustomToast
-            title="edfvgf"
-            description="rjfhbveun"
+            title="Custom Title"
+            description="Custom Description"
             onDismiss={() => console.log("closed")}
         />
     )}
@@ -125,14 +126,15 @@ const CustomToast = ({ title, description, onDismiss }) => {
 </ToastProvider>;
 ```
 
-### **5️⃣ Setting Toast Duration and Offsets**
+### **5⃣ Setting Toast Duration and Offsets**
 
 You can control how long the toast remains visible using the `duration` prop in both `ToastProvider` and `showToast`.
 Additionally, you can adjust the toast's position using `offsetTop` and `offsetBottom`.
 
 ```tsx
 <ToastProvider
-    direction="top"
+    position="top"
+    animationType="fade"
     duration={4000}
     offsetTop={60}
     offsetBottom={100}
@@ -147,17 +149,16 @@ showToast({
     description: "This message will disappear in 5 seconds.",
     variant: "warning",
     duration: 4000,
-    offsetTop: 60,
-    offsetBottom: 100,
 });
 ```
 
 ## What’s Improved?
 
 ```
-✅ Toast moves above the keyboard when direction="bottom"
+✅ Toast moves above the keyboard when position="bottom"
 ✅ Uses Keyboard.addListener() to track the keyboard height dynamically
 ✅ Keeps original offsetTop and offsetBottom behavior intact
+✅ Supports animationType prop: "slide" and "fade"
 ```
 
 ## 🎨 Toast Variants
@@ -172,20 +173,21 @@ showToast({
 
 ### **`ToastProvider` Props**
 
-| Prop           | Type                | Default  | Description                                        |
-| -------------- | ------------------- | -------- | -------------------------------------------------- |
-| `direction`    | `'top' \| 'bottom'` | `'top'`  | Position of the toast.                             |
-| `customToast`  | `ReactNode`         | `null`   | Custom toast component.                            |
-| `duration`     | `number`            | `4000ms` | Duration before toast disappears (ms).             |
-| `offsetTop`    | `number`            | `60`     | Offset from the top when direction is "top".       |
-| `offsetBottom` | `number`            | `100`    | Offset from the bottom when direction is "bottom". |
+| Prop                   | Type                            | Default   | Description                                       |
+| ---------------------- | ------------------------------- | --------- | ------------------------------------------------- |
+| `position`             | `'top' \| 'center' \| 'bottom'` | `'top'`   | Position of the toast.                            |
+| `animationType`        | `'slide' \| 'fade'`             | `'slide'` | Animation type for toast appearance.              |
+| `customToastComponent` | `ReactNode`                     | `null`    | Custom toast component.                           |
+| `duration`             | `number`                        | `4000ms`  | Duration before toast disappears (ms).            |
+| `offsetTop`            | `number`                        | `60`      | Offset from the top when position is "top".       |
+| `offsetBottom`         | `number`                        | `100`     | Offset from the bottom when position is "bottom". |
 
 ### **`useToast()` Methods**
 
-| Method      | Arguments                                                                                                                                            | Description              |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `showToast` | `{ title: string, description?: string, variant?: 'success' \| 'error' \| 'warning', duration?: number, offsetTop?: number, offsetBottom?: number }` | Displays a toast.        |
-| `hideToast` | `()`                                                                                                                                                 | Hides the current toast. |
+| Method      | Arguments                                                                                                                                                                               | Description              |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `showToast` | `{ title: string, description?: string, variant?: 'success' \| 'error' \| 'warning', animationType?: 'slide' \| 'fade', duration?: number, offsetTop?: number, offsetBottom?: number }` | Displays a toast.        |
+| `hideToast` | `()`                                                                                                                                                                                    | Hides the current toast. |
 
 This makes sure the toast never overlaps the keyboard when appearing at the bottom! 🚀
 

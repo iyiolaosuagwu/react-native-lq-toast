@@ -16,9 +16,13 @@ interface LQToastProps {
     duration?: number;
     offsetTop?: number;
     offsetBottom?: number;
-    direction?: "top" | "bottom";
+    position?: "top" | "bottom" | "center";
+    animationType?: "slide" | "fade";
     onDismiss: () => void;
-    customComponent?: React.FC<{ animationStyle?: any; onDismiss: () => void }>;
+    customToastComponent?: React.FC<{
+        animationStyle?: any;
+        onDismiss: () => void;
+    }>;
 }
 
 const iconsMap = {
@@ -33,22 +37,21 @@ const LQToast: React.FC<LQToastProps> = ({
     description,
     variant = "default",
     isVisible,
-    direction = "top",
+    position = "top",
     duration,
     offsetTop = 60,
     offsetBottom = 100,
+    animationType = "slide",
     onDismiss,
-    customComponent: CustomComponent,
+    customToastComponent: CustomComponent,
 }) => {
-    const slideAnim = useRef(
-        new Animated.Value(
-            direction === "top" ? -offsetTop - 100 : offsetBottom + 100
-        )
-    ).current;
+    const slideAnim = useRef(new Animated.Value(0)).current;
+    const fadeAnim = useRef(new Animated.Value(0)).current;
     const [keyboardHeight, setKeyboardHeight] = useState(0);
+    const [toastHeight, setToastHeight] = useState(0); // State to store toast height
 
     useEffect(() => {
-        if (direction === "bottom") {
+        if (position === "bottom") {
             const keyboardDidShowListener = Keyboard.addListener(
                 "keyboardDidShow",
                 (event) => setKeyboardHeight(event.endCoordinates.height)
@@ -64,35 +67,70 @@ const LQToast: React.FC<LQToastProps> = ({
                 keyboardDidHideListener.remove();
             };
         }
-    }, [direction]);
+    }, [position]);
 
     useEffect(() => {
-        Animated.timing(slideAnim, {
-            toValue: isVisible
-                ? direction === "top"
-                    ? offsetTop
-                    : -offsetBottom
-                : direction === "top"
-                ? -offsetTop - 100
-                : offsetBottom + 100,
-            duration,
-            useNativeDriver: true,
-        }).start();
-    }, [isVisible, direction, offsetTop, offsetBottom]);
+        slideAnim.setValue(0);
+        fadeAnim.setValue(0);
+    }, [animationType, position]);
+
+    useEffect(() => {
+        if (position === "center" || animationType === "fade") {
+            Animated.timing(fadeAnim, {
+                toValue: isVisible ? 1 : 0,
+                duration,
+                useNativeDriver: true,
+            }).start();
+        } else {
+            const initialTranslateY =
+                position === "top"
+                    ? -offsetTop - toastHeight
+                    : offsetBottom + toastHeight;
+
+            slideAnim.setValue(initialTranslateY);
+
+            Animated.timing(slideAnim, {
+                toValue: isVisible
+                    ? position === "top"
+                        ? offsetTop
+                        : -offsetBottom
+                    : initialTranslateY,
+                duration,
+                useNativeDriver: true,
+            }).start();
+        }
+    }, [isVisible, position, offsetTop, offsetBottom, toastHeight]);
+
+    const handleLayout = (event: any) => {
+        const { height } = event.nativeEvent.layout;
+        setToastHeight(height);
+    };
 
     if (CustomComponent) {
         return (
             <Animated.View
+                onLayout={handleLayout}
                 style={[
                     styles.toastContainer,
+                    position === "center" && styles.centerContainer,
                     {
-                        transform: [{ translateY: slideAnim }],
-                        [direction]:
-                            direction === "bottom"
+                        transform: [
+                            position === "center" || animationType === "fade"
+                                ? { translateY: 0 }
+                                : { translateY: slideAnim },
+                        ],
+                        opacity:
+                            position === "center" || animationType === "fade"
+                                ? fadeAnim
+                                : 1,
+                        [position]:
+                            position === "bottom"
                                 ? keyboardHeight > 0
                                     ? keyboardHeight + offsetBottom
                                     : offsetBottom
-                                : offsetTop,
+                                : position === "top"
+                                ? offsetTop
+                                : undefined,
                     },
                 ]}
             >
@@ -103,17 +141,29 @@ const LQToast: React.FC<LQToastProps> = ({
 
     return (
         <Animated.View
+            onLayout={handleLayout}
             style={[
                 styles.toastContainer,
                 styles[variant],
+                position === "center" && styles.centerContainer,
                 {
-                    transform: [{ translateY: slideAnim }],
-                    [direction]:
-                        direction === "bottom"
+                    transform: [
+                        position === "center" || animationType === "fade"
+                            ? { translateY: 0 }
+                            : { translateY: slideAnim },
+                    ],
+                    opacity:
+                        position === "center" || animationType === "fade"
+                            ? fadeAnim
+                            : 1,
+                    [position]:
+                        position === "bottom"
                             ? keyboardHeight > 0
                                 ? keyboardHeight + offsetBottom
                                 : offsetBottom
-                            : offsetTop,
+                            : position === "top"
+                            ? offsetTop
+                            : undefined,
                 },
             ]}
         >
@@ -144,6 +194,11 @@ const styles = StyleSheet.create({
         zIndex: 9999,
         flexDirection: "row",
         gap: 10,
+    },
+    centerContainer: {
+        top: "50%",
+        marginTop: -25, // Adjust based on the height of the toast
+        alignSelf: "center",
     },
     success: { backgroundColor: "#EFFAF6" },
     error: { backgroundColor: "#FDEDF0" },

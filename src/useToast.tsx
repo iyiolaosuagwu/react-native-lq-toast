@@ -25,16 +25,21 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 interface ToastProviderProps {
     children: ReactNode;
     duration?: number;
-    direction?: "top" | "bottom";
+    position?: "top" | "bottom" | "center";
+    animationType?: "slide" | "fade";
     offsetTop?: number;
     offsetBottom?: number;
-    customComponent?: React.FC<{ animationStyle?: any; onDismiss: () => void }>; // ✅ Ensuring correct type
+    customToastComponent?: React.FC<{
+        animationStyle?: any;
+        onDismiss: () => void;
+    }>; // ✅ Ensuring correct type
 }
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
     children,
-    direction = "top",
-    customComponent,
+    position = "top",
+    animationType = "slide",
+    customToastComponent,
     duration = 4000,
     offsetTop = 30,
     offsetBottom = 30,
@@ -72,8 +77,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
             <LQToast
                 {...toast}
                 onDismiss={hideToast}
-                direction={direction}
-                customComponent={customComponent}
+                position={position}
+                animationType={animationType}
+                customToastComponent={customToastComponent}
                 offsetTop={offsetTop}
                 offsetBottom={offsetBottom}
             />

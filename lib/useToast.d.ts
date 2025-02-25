@@ -12,10 +12,11 @@ interface ToastContextType {
 interface ToastProviderProps {
     children: ReactNode;
     duration?: number;
-    direction?: "top" | "bottom";
+    position?: "top" | "bottom" | "center";
+    animationType?: "slide" | "fade";
     offsetTop?: number;
     offsetBottom?: number;
-    customComponent?: React.FC<{
+    customToastComponent?: React.FC<{
         animationStyle?: any;
         onDismiss: () => void;
     }>;
