@@ -32,7 +32,7 @@ interface ToastProviderProps {
     customToastComponent?: React.FC<{
         animationStyle?: any;
         onDismiss: () => void;
-    }>; // ✅ Ensuring correct type
+    }>;
 }
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
